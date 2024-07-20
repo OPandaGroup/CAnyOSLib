@@ -5,6 +5,11 @@
 // @copyright: Panda, 2024
 //
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "./PString.h"
+#include "./PFile.h"
+
 // 完成系统重定向,函数实现在so文件中,所以,链接在build中实现
 #ifdef Win_NT
     #include "./PWindows.h"
@@ -16,3 +21,4 @@
 void _ShellToUTF8();
 void _gotoXY(int x, int y);
 char *_getSystem() ;
+char *_runShell(char *cmd) ;

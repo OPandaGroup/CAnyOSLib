@@ -26,3 +26,8 @@ char *_getSystem() {
         return "Linux";
     #endif
 }
+
+char *_runShell(char *cmd){
+    system(splice_String(cmd, " > ./run/tmp.txt"));
+    return readfile(fopen("./run/tmp.txt", "r"), fileSize(fopen("./run/tmp.txt", "r")));
+}

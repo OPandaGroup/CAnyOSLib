@@ -67,7 +67,7 @@ char *erase(char *str,ull index,ull len){
     return string;
 }
 
-char *strappend(char *str, char *str2){
+char *splice_String(char *str, char *str2){
     char *string = (char *)malloc(strlen(str)+strlen(str2)+1);
     memset(string,0,strlen(str)+strlen(str2)+1);
     for (int i = 0; i < strlen(str); i++){

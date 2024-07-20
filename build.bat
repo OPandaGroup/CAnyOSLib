@@ -29,8 +29,9 @@ gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PWindows.c ..\build\PandaRunT
 echo [%time%]:编译PWindows完成 >> build.log
 :: Linux
 :: 由于这个bat文件是针对Windows的,所以不用编译Linux的so库
-gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PSystem.c -DWin_NT ..\build\PandaRunTimeLibrary\lib\PWindows.so -o ..\build\PandaRunTimeLibrary\lib\PSystem.so
+gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PSystem.c -DWin_NT ..\build\PandaRunTimeLibrary\lib\PWindows.so -o ..\build\PandaRunTimeLibrary\lib\PSystem.so ..\build\PandaRunTimeLibrary\lib\PString.so ..\build\PandaRunTimeLibrary\lib\PFile.so
 gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PDataStructure.c ..\build\PandaRunTimeLibrary\lib\PDataTypeConversion.so ..\build\PandaRunTimeLibrary\lib\PFile.so ..\build\PandaRunTimeLibrary\lib\PDebug.so ..\build\PandaRunTimeLibrary\lib\PString.so ..\build\PandaRunTimeLibrary\lib\Pprint.so ..\build\PandaRunTimeLibrary\lib\PSystem.so -o ..\build\PandaRunTimeLibrary\lib\PDataStructure.so
 echo [%time%]:编译PDataStructure完成 >> build.log
 echo [%time%]:编译PSystem完成 >> build.log
 echo [%time%]:so库编译完成 >> build.log
+xcopy "..\build\PandaRunTimeLibrary\lib" ".\lib" /E /I /Y

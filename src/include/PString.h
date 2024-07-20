@@ -20,7 +20,7 @@ typedef char * string;
 _Bool stringcmp(const char *str1, char *str2,_Bool efficiency); //efficiency
 ull stringsearch(char *str1, char *str2); 
 char *erase(char *str,ull index,ull len);
-char *strappend(char *str, char *str2);
+char *splice_String(char *str, char *str2);
 char *stringcut(char *str, ull index, ull len);
 char *stringcut_(char *str, ull index, ull len);
 //Forward_Ergodic和Forward_Icts一样

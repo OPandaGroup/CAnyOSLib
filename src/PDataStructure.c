@@ -193,7 +193,7 @@ void print_list(struct list *list){
     printf("[");
     while (node!=NULL){
         if(node->data != NULL)
-            printf("%s,",strappend(node->data, "\0"));
+            printf("%s,",splice_String(node->data, "\0"));
         node = node->next;
     }
     printf("]");
@@ -291,16 +291,16 @@ string get_dirtJSON(struct dirt *dirt){
     }
     struct dirt_node *node = dirt->head;
     if(dirt->len == 0 || node == NULL){
-        return strappend(json,None);
+        return splice_String(json,None);
     }
-    json = strappend(json,"{\n");
+    json = splice_String(json,"{\n");
     while (node != NULL){
-        json = strappend(json,"\t\"");json = strappend(json,node->key);json = strappend(json,"\":");json = strappend(json,"\"");json = strappend(json,node->value);
-        if(node->next != NULL) json = strappend(json,"\",\n");
-        else json = strappend(json,"\"\n");
+        json = splice_String(json,"\t\"");json = splice_String(json,node->key);json = splice_String(json,"\":");json = splice_String(json,"\"");json = splice_String(json,node->value);
+        if(node->next != NULL) json = splice_String(json,"\",\n");
+        else json = splice_String(json,"\"\n");
         node = node->next;
     }
-    return strappend(json,"}\0");
+    return splice_String(json,"}\0");
 }
 
 //function of tree
@@ -367,22 +367,22 @@ void append_more_data(struct tree *tree, string key, string data){
 string get_tree_dirt(struct tree *tree, bool child){
     if(child){
         string str = "\0";
-        str = strappend(str,"$data");
-        str = strappend(str,"=\"");
-        str = strappend(str,tree->data);
-        str = strappend(str,"\"");
+        str = splice_String(str,"$data");
+        str = splice_String(str,"=\"");
+        str = splice_String(str,tree->data);
+        str = splice_String(str,"\"");
         if(tree->more == NULL)  return str;
         if(tree->more->len == 0){
             return str;
         }else{
-            str = strappend(str, " ");
+            str = splice_String(str, " ");
             for(int i = 0; i < tree->more->len ; i++){
-                str = strappend(str,tree->more->head->key);
-                str = strappend(str,"=\"");
-                str = strappend(str,tree->more->head->value);
-                str = strappend(str, "\" ");
+                str = splice_String(str,tree->more->head->key);
+                str = splice_String(str,"=\"");
+                str = splice_String(str,tree->more->head->value);
+                str = splice_String(str, "\" ");
             }
-            str = strappend(str,"\b");
+            str = splice_String(str,"\b");
             return str;
         }
     }else{
@@ -392,12 +392,12 @@ string get_tree_dirt(struct tree *tree, bool child){
         }else if(tree->more->len == 0){
             return str;
         }else{
-            str = strappend(str, " ");
+            str = splice_String(str, " ");
             for(int i = 0; i < tree->more->len ; i++){
-                str = strappend(str,tree->more->head->key);
-                str = strappend(str,"=\"");
-                str = strappend(str,tree->more->head->value);
-                str = strappend(str, "\" ");
+                str = splice_String(str,tree->more->head->key);
+                str = splice_String(str,"=\"");
+                str = splice_String(str,tree->more->head->value);
+                str = splice_String(str, "\" ");
             }
             return str;
         }     
@@ -408,16 +408,16 @@ string get_tree_XML(struct tree *tree, int level){
     if(tree == NULL)    return None;
     string str = "\0";
     for (int i = 0; i < level; i++){
-        str = strappend(str, "\t");
+        str = splice_String(str, "\t");
     }
     if(tree->child_num == 0){
-        str = strappend(str, strappend("<", strappend(tree->key, strappend(get_tree_dirt(tree, 0), "> "))));
-        str = strappend(str, tree->data);
-        str = strappend(str, strappend("</", strappend(tree->key, ">\n")));
+        str = splice_String(str, splice_String("<", splice_String(tree->key, splice_String(get_tree_dirt(tree, 0), "> "))));
+        str = splice_String(str, tree->data);
+        str = splice_String(str, splice_String("</", splice_String(tree->key, ">\n")));
     }else{
-        str = strappend(str, strappend("<", strappend(strappend(tree->key, strappend(" ", get_tree_dirt(tree, 1))), ">\n")));
-        for(int i = 0; i < tree->child_num; i++)    str = strappend(str, get_tree_XML(tree->child[i], level+1));
-        str = strappend(str, strappend("</", strappend(tree->key, ">\n")));
+        str = splice_String(str, splice_String("<", splice_String(splice_String(tree->key, splice_String(" ", get_tree_dirt(tree, 1))), ">\n")));
+        for(int i = 0; i < tree->child_num; i++)    str = splice_String(str, get_tree_XML(tree->child[i], level+1));
+        str = splice_String(str, splice_String("</", splice_String(tree->key, ">\n")));
     }
     return str;
 }
@@ -489,7 +489,7 @@ tree *get_tree_from_XML(string XML){
             break;
         case '>':
             if(start != -1){
-                string now = strappend(Nicts(XML, i + 1, '<'), "\0");
+                string now = splice_String(Nicts(XML, i + 1, '<'), "\0");
                 if (now[0] != '\0'){
                     append_dirt(dirts, intToString(idx), now) ;
                 }
@@ -499,7 +499,7 @@ tree *get_tree_from_XML(string XML){
                 start = -1;
                 if(cut[0] != '/')    idx ++;
             }else{
-                printError("Xml处理", "Xml语法错误", strappend(intToString(i), "有一个>但在这之前没有对应的<"));
+                printError("Xml处理", "Xml语法错误", splice_String(intToString(i), "有一个>但在这之前没有对应的<"));
                 return NULL;
             }
             break;
@@ -515,8 +515,8 @@ tree *get_tree_from_XML(string XML){
         // strs[i] = delchar(delchar(strs[i], '<'), '>');//过滤括号
         for (int j = 0; j < strlen(strs[i]); j++){
             if(strs[i][j] == ' ' || (strs[i][j] == '/' && j != 0)){
-                string cut = strappend(stringcut_(strs[i], j, strlen(strs[i])-1), "\0") ;
-                append_dirt(dirts, strappend("$", intToString(idx)), Icts(strappend(cut, ">"), 0, '>')); //$这样做是为了跟之前的><中的数据有区别 @writing :别管，这个“ Icts(strappend(cut, ">"), 0, '>')”离谱的操作还能让可信度变高
+                string cut = splice_String(stringcut_(strs[i], j, strlen(strs[i])-1), "\0") ;
+                append_dirt(dirts, splice_String("$", intToString(idx)), Icts(splice_String(cut, ">"), 0, '>')); //$这样做是为了跟之前的><中的数据有区别 @writing :别管，这个“ Icts(splice_String(cut, ">"), 0, '>')”离谱的操作还能让可信度变高
                 strs[i] = stringcut_(strs[i], 0, j); 
                 break;
             }
