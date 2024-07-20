@@ -14,12 +14,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "./include/PFile.h"
-#include "./include/PString.h"
-#include "./include/PDebug.h"
-#include "./include/Pprint.h"
-#include "./include/PSystem.h"
-#include "./include/PDataTypeConversion.h"
+#include "./PFile.h"
+#include "./PString.h"
+#include "./PDebug.h"
+#include "./Pprint.h"
+#include "./PSystem.h"
+#include "./PDataTypeConversion.h"
 
 typedef unsigned long long ull;
 typedef char * string;

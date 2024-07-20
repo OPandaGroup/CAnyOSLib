@@ -6,9 +6,9 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-#include "./include/PString.h"
-#include "./include/PColor.h"
-#include "./include/PFile.h"
+#include "./PString.h"
+#include "./PColor.h"
+#include "./PFile.h"
 
 void PDebug(string message) ;
 void PDebugLine(string message, _Bool newline) ;

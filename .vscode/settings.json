@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "pfile.h": "c",
+        "pstring.h": "c",
+        "pdebug.h": "c"
+    }
+}
