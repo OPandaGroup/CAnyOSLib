@@ -16,9 +16,7 @@
 #include <stdarg.h>
 #include "./PFile.h"
 #include "./PString.h"
-#include "./PDebug.h"
 #include "./Pprint.h"
-#include "./PSystem.h"
 #include "./PDataTypeConversion.h"
 
 typedef unsigned long long ull;

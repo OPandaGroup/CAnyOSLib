@@ -276,8 +276,8 @@ void print_dirt(struct dirt *dirt){
     }
     printf("{");
     while (node!=NULL){
-        putchar('"');print_String(node->key);printf("\":");
-        putchar('"');print_String(node->value);printf("\",");
+        putchar('"');printf(node->key);printf("\":");
+        putchar('"');printf(node->value);printf("\",");
         node = node->next;
     }
     printf("\b}");
@@ -432,7 +432,6 @@ tree *get_child(struct tree *tree, int index){
 
 dirt *get_treeMoreData(string str){ 
     // @bug: 这段代码中有一点bug, 导致处理数据可能会出现故障
-    print_String(str);
     endl ;
     bool is_str = false, is_str_dm = false;
     string data = malloc(strlen(str)); memset(data, 0, strlen(str));
@@ -451,7 +450,6 @@ dirt *get_treeMoreData(string str){
         }
     }
     data[strlen(data)] = '\0';
-    print_String(data);
     list *list = split(data, ',');
     dirt *Adirt = Dirt();
     print_list(list);
@@ -463,14 +461,12 @@ dirt *get_treeMoreData(string str){
     //     value = delchar(value, '\"');value = delchar(value, '\'');
     //     append_dirt(Adirt, key, value);
     // }
-    // print_DebugFileLine(get_dirtJSON(Adirt), 1);
     // print_dirt(Adirt);
     // free(list); free(data);
     return Adirt;
 }
 
 tree *get_tree_from_XML(string XML){
-    init_DebugFile();_ShellToUTF8();
     ull start = -1;
     int len = 1;
     char **strs = malloc(sizeof(char *)*len);
@@ -481,7 +477,6 @@ tree *get_tree_from_XML(string XML){
     dirt *dirts = Dirt(); //处理更多数据
     //第一次预处理
     int idx = 0;
-    print_DebugFileLine("switch", 1);
     for (ull i = 0; i < strlen(XML); i++){
         switch (XML[i]){
         case '<':
@@ -507,7 +502,6 @@ tree *get_tree_from_XML(string XML){
             break;
         }
     }
-    // print_DebugFileLine("for", 1);
     printf("Debug%d", len) ;
     //第二次预处理 完成对无效字符和字符串的过滤
     idx = 0; int markers = dirts->len;
@@ -543,7 +537,6 @@ tree *get_tree_from_XML(string XML){
         if(st != NULL)
             print_stack(st) ;
         else
-            print_DebugFileLine("NULL", 1);
         if(stringcmp(get_stack_top(st)->data, strs[i], 1) && is_del){
             printf("pop ");
             pop_stack(st);
@@ -563,13 +556,11 @@ tree *get_tree_from_XML(string XML){
         printf("完成%d次循环", i);
     }
     if(st->len != 0){printf("XML error: xml syntax error"); return NULL;} 
-    print_DebugFileLine("end", 1);
     print_tree(trees, 0);
     printf("PDebug%d", len) ;
     fflush(stdout);
     putchar('\n') ;
     // string json = get_dirtJSON(dirts);
-    // print_DebugFileLine(get_dirtJSON(dirts), 1) ;
     // // get_treeMoreData(" name = 'b' scope = 'local' value = 'a'") ;
     // struct dirt_node *node = dirts->head ;
     // for(ull i = 1; i < markers; i++){
@@ -577,7 +568,6 @@ tree *get_tree_from_XML(string XML){
     // }
     // for(ull i = markers; i < len - 1; i++){
     //     get_treeMoreData(node->value);
-    //     print_DebugFileLine(node->value, 1);
     //     printf("\n") ;
     //     node = node->next;
     // }

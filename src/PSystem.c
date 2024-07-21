@@ -31,3 +31,13 @@ char *_runShell(char *cmd){
     system(splice_String(cmd, " > ./run/tmp.txt"));
     return readfile(fopen("./run/tmp.txt", "r"), fileSize(fopen("./run/tmp.txt", "r")));
 }
+
+char *_getFilePath(char *path){
+    Replace(path, '\\', '/') ;
+    for(int i = strlen(path) - 1; i >= 0; i--){
+        if(path[i] == '/'){
+            return stringcut(path, 0, i);
+        }
+    }
+    return path;
+}

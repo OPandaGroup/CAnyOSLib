@@ -22,3 +22,4 @@ void _ShellToUTF8();
 void _gotoXY(int x, int y);
 char *_getSystem() ;
 char *_runShell(char *cmd) ;
+char *_getFilePath(char *path) ;//获取文件所在文件夹 比如 /home/user/file.txt 返回/home/user/
