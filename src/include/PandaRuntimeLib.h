@@ -1,0 +1,7 @@
+#include "./include/PColor.h"
+#include "./include/PDataStructure.h"
+#include "./include/PFile.h"
+#include "./include/PDataTypeConversion.h"
+#include "./include/PString.h"
+#include "./include/PSystem.h"
+#include "./include/PDebug.h"

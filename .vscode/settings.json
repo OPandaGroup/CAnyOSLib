@@ -1,10 +1,10 @@
 {
     "files.associations": {
-        "pfile.h": "c",
-        "pstring.h": "c",
-        "pdebug.h": "c",
-        "plinux.h": "c",
         "pdatastructure.h": "c",
-        "psystem.h": "c"
+        "stdlib.h": "c",
+        "pstring.h": "c",
+        "locale.h": "c",
+        "pfile.h": "c",
+        "pandaruntimelibrary.h": "c"
     }
 }

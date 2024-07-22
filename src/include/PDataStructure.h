@@ -11,6 +11,7 @@
 #define None "None"
 #define endl printf("\n")
 #define Debug(...) printf(__VA_ARGS__)
+#define SIZE_STRING sizeof(string)
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

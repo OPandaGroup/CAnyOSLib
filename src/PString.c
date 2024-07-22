@@ -7,26 +7,22 @@
 #include "./include/PString.h"
 
 /*string function*/
-_Bool stringcmp(const char *str1, char *str2,_Bool efficiency){
-    if(strlen(str1)!=strlen(str2)){
+_Bool stringcmp(char *_Str1, char *_Str2){
+    size_t lenght_1 = strlen(_Str1), lenght_2 = strlen(_Str2);
+    printf("Link %ld %ld", lenght_1, lenght_2) ;
+    if(strlen(_Str1) != strlen(_Str2)){
+        printf("if ->1") ;
         return 0;
-    }
-    if(efficiency){
-        for (ull index = 0; index < strlen(str2); index++){
-            if (str1[index]!=str2[index]){
+    }else{
+        printf("if ->2") ;
+        for(int i = 0; i < strlen(_Str1); i++){
+            printf("%c",_Str1[i]);
+            if(_Str1[i] != _Str2[i]){
                 return 0;
             }
         }
-        return 1;
-    }else{
-        _Bool flag = 1;
-        for (ull index = 0; index < strlen(str2); index++){
-            if (str1[index]!=str2[index]){
-                flag = 0;
-            }
-        }
-        return flag;
     }
+    return 1;
 }
 
 ull stringsearch(char *str1, char *str2) {
@@ -34,7 +30,7 @@ ull stringsearch(char *str1, char *str2) {
     if(strlen(str1)<strlen(str2)){
         return -1;
     }else if (strlen(str1)==strlen(str2)){
-        stringcmp(str1,str2,1);
+        stringcmp(str1,str2);
     }else{
         for (ull index1 = 0; index1 < strlen(str1); index1++){
             if (str1[index1]==str2[index2]){
@@ -67,7 +63,7 @@ char *erase(char *str,ull index,ull len){
     return string;
 }
 
-char *splice_String(char *str, char *str2){
+char *Strsplice(char *str, char *str2){
     char *string = (char *)malloc(strlen(str)+strlen(str2)+1);
     memset(string,0,strlen(str)+strlen(str2)+1);
     for (int i = 0; i < strlen(str); i++){

@@ -193,7 +193,7 @@ void print_list(struct list *list){
     printf("[");
     while (node!=NULL){
         if(node->data != NULL)
-            printf("%s,",splice_String(node->data, "\0"));
+            printf("%s,",Strsplice(node->data, "\0"));
         node = node->next;
     }
     printf("]");
@@ -291,16 +291,16 @@ string get_dirtJSON(struct dirt *dirt){
     }
     struct dirt_node *node = dirt->head;
     if(dirt->len == 0 || node == NULL){
-        return splice_String(json,None);
+        return Strsplice(json,None);
     }
-    json = splice_String(json,"{\n");
+    json = Strsplice(json,"{\n");
     while (node != NULL){
-        json = splice_String(json,"\t\"");json = splice_String(json,node->key);json = splice_String(json,"\":");json = splice_String(json,"\"");json = splice_String(json,node->value);
-        if(node->next != NULL) json = splice_String(json,"\",\n");
-        else json = splice_String(json,"\"\n");
+        json = Strsplice(json,"\t\"");json = Strsplice(json,node->key);json = Strsplice(json,"\":");json = Strsplice(json,"\"");json = Strsplice(json,node->value);
+        if(node->next != NULL) json = Strsplice(json,"\",\n");
+        else json = Strsplice(json,"\"\n");
         node = node->next;
     }
-    return splice_String(json,"}\0");
+    return Strsplice(json,"}\0");
 }
 
 //function of tree
@@ -351,7 +351,7 @@ void add_tree_data(struct tree *tree, void *data){
 
 void append_more_data(struct tree *tree, string key, string data){
     dirt *dirt = tree->more;
-    if(stringcmp(key, "$data", 1)){
+    if(stringcmp(key, "$data")){
         printf("Error: key is $data\n");
         return ;
     }
@@ -367,22 +367,22 @@ void append_more_data(struct tree *tree, string key, string data){
 string get_tree_dirt(struct tree *tree, bool child){
     if(child){
         string str = "\0";
-        str = splice_String(str,"$data");
-        str = splice_String(str,"=\"");
-        str = splice_String(str,tree->data);
-        str = splice_String(str,"\"");
+        str = Strsplice(str,"$data");
+        str = Strsplice(str,"=\"");
+        str = Strsplice(str,tree->data);
+        str = Strsplice(str,"\"");
         if(tree->more == NULL)  return str;
         if(tree->more->len == 0){
             return str;
         }else{
-            str = splice_String(str, " ");
+            str = Strsplice(str, " ");
             for(int i = 0; i < tree->more->len ; i++){
-                str = splice_String(str,tree->more->head->key);
-                str = splice_String(str,"=\"");
-                str = splice_String(str,tree->more->head->value);
-                str = splice_String(str, "\" ");
+                str = Strsplice(str,tree->more->head->key);
+                str = Strsplice(str,"=\"");
+                str = Strsplice(str,tree->more->head->value);
+                str = Strsplice(str, "\" ");
             }
-            str = splice_String(str,"\b");
+            str = Strsplice(str,"\b");
             return str;
         }
     }else{
@@ -392,12 +392,12 @@ string get_tree_dirt(struct tree *tree, bool child){
         }else if(tree->more->len == 0){
             return str;
         }else{
-            str = splice_String(str, " ");
+            str = Strsplice(str, " ");
             for(int i = 0; i < tree->more->len ; i++){
-                str = splice_String(str,tree->more->head->key);
-                str = splice_String(str,"=\"");
-                str = splice_String(str,tree->more->head->value);
-                str = splice_String(str, "\" ");
+                str = Strsplice(str,tree->more->head->key);
+                str = Strsplice(str,"=\"");
+                str = Strsplice(str,tree->more->head->value);
+                str = Strsplice(str, "\" ");
             }
             return str;
         }     
@@ -408,16 +408,16 @@ string get_tree_XML(struct tree *tree, int level){
     if(tree == NULL)    return None;
     string str = "\0";
     for (int i = 0; i < level; i++){
-        str = splice_String(str, "\t");
+        str = Strsplice(str, "\t");
     }
     if(tree->child_num == 0){
-        str = splice_String(str, splice_String("<", splice_String(tree->key, splice_String(get_tree_dirt(tree, 0), "> "))));
-        str = splice_String(str, tree->data);
-        str = splice_String(str, splice_String("</", splice_String(tree->key, ">\n")));
+        str = Strsplice(str, Strsplice("<", Strsplice(tree->key, Strsplice(get_tree_dirt(tree, 0), "> "))));
+        str = Strsplice(str, tree->data);
+        str = Strsplice(str, Strsplice("</", Strsplice(tree->key, ">\n")));
     }else{
-        str = splice_String(str, splice_String("<", splice_String(splice_String(tree->key, splice_String(" ", get_tree_dirt(tree, 1))), ">\n")));
-        for(int i = 0; i < tree->child_num; i++)    str = splice_String(str, get_tree_XML(tree->child[i], level+1));
-        str = splice_String(str, splice_String("</", splice_String(tree->key, ">\n")));
+        str = Strsplice(str, Strsplice("<", Strsplice(Strsplice(tree->key, Strsplice(" ", get_tree_dirt(tree, 1))), ">\n")));
+        for(int i = 0; i < tree->child_num; i++)    str = Strsplice(str, get_tree_XML(tree->child[i], level+1));
+        str = Strsplice(str, Strsplice("</", Strsplice(tree->key, ">\n")));
     }
     return str;
 }
@@ -476,102 +476,7 @@ tree *get_tree_from_XML(string XML){
     }
     dirt *dirts = Dirt(); //处理更多数据
     //第一次预处理
-    int idx = 0;
-    for (ull i = 0; i < strlen(XML); i++){
-        switch (XML[i]){
-        case '<':
-            start = i;
-            break;
-        case '>':
-            if(start != -1){
-                string now = splice_String(Nicts(XML, i + 1, '<'), "\0");
-                if (now[0] != '\0'){
-                    append_dirt(dirts, intToString(idx), now) ;
-                }
-                string cut = delchar(delchar(stringcut_(XML, start, i), '>'), '<');
-                strs[len-1] = cut;
-                strs = realloc(strs, sizeof(char *)*++len);
-                start = -1;
-                if(cut[0] != '/')    idx ++;
-            }else{
-                printError("Xml处理", "Xml语法错误", splice_String(intToString(i), "有一个>但在这之前没有对应的<"));
-                return NULL;
-            }
-            break;
-        default:
-            break;
-        }
-    }
-    printf("Debug%d", len) ;
-    //第二次预处理 完成对无效字符和字符串的过滤
-    idx = 0; int markers = dirts->len;
-    for(int i = 0;i < len - 1; i++){
-        // strs[i] = delchar(delchar(strs[i], '<'), '>');//过滤括号
-        for (int j = 0; j < strlen(strs[i]); j++){
-            if(strs[i][j] == ' ' || (strs[i][j] == '/' && j != 0)){
-                string cut = splice_String(stringcut_(strs[i], j, strlen(strs[i])-1), "\0") ;
-                append_dirt(dirts, splice_String("$", intToString(idx)), Icts(splice_String(cut, ">"), 0, '>')); //$这样做是为了跟之前的><中的数据有区别 @writing :别管，这个“ Icts(splice_String(cut, ">"), 0, '>')”离谱的操作还能让可信度变高
-                strs[i] = stringcut_(strs[i], 0, j); 
-                break;
-            }
-        }
-        if (strs[i][0] != '/')  idx ++;
-        strs[i] = delchar(strs[i], ' '); 
-    }
-    if(len == 1){printf("XML error: xml is None"); return NULL;}
-    tree *trees = Tree(None, strs[0], NULL);
-    stack *st = Stack(); 
-    push_stack(st, strs[0]);
-    get_stack_top(st)->more_data = trees;
-    bool is_del = false;
-    for(int i = 1; i < len - 1; i++){
-        printf("\n第%d次:Debug%d  ", i, i) ;
-        if(strs[i] == NULL) printError("Xml处理", "当前string is NULL", "阿爸阿爸");
-        if(strs[i][0] == '/'){
-            is_del = true;
-            strs[i] = delchar(strs[i], '/');
-        }else{
-            is_del = false ;
-        }
-        printf("is_del"); 
-        if(st != NULL)
-            print_stack(st) ;
-        else
-        if(stringcmp(get_stack_top(st)->data, strs[i], 1) && is_del){
-            printf("pop ");
-            pop_stack(st);
-            printf("pop ");
-        }else{
-            printf("push ");
-            tree *parent = get_stack_top(st)->more_data;
-            append_tree(st->end->more_data, None, strs[i]);
-            printf("Ready");
-            push_stack(st, strs[i]);
-            get_stack_top(st)->more_data = get_child(parent, parent->child_num - 1);
-            printf("push ");
-        }
-        printf("pop or push\n");
-        is_del = false;
-        endl ;
-        printf("完成%d次循环", i);
-    }
-    if(st->len != 0){printf("XML error: xml syntax error"); return NULL;} 
-    print_tree(trees, 0);
-    printf("PDebug%d", len) ;
-    fflush(stdout);
-    putchar('\n') ;
-    // string json = get_dirtJSON(dirts);
-    // // get_treeMoreData(" name = 'b' scope = 'local' value = 'a'") ;
-    // struct dirt_node *node = dirts->head ;
-    // for(ull i = 1; i < markers; i++){
-    //     node = node->next;
-    // }
-    // for(ull i = markers; i < len - 1; i++){
-    //     get_treeMoreData(node->value);
-    //     printf("\n") ;
-    //     node = node->next;
-    // }
-    return trees;
+    
 }
 
 //function of resources

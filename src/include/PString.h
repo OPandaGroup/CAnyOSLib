@@ -17,10 +17,10 @@ typedef size_t ull;
 typedef _Bool bool;
 typedef char * string;
 
-_Bool stringcmp(const char *str1, char *str2,_Bool efficiency); //efficiency
+_Bool stringcmp(char *_Str1, char *_Str2); //如果一样返回true
 ull stringsearch(char *str1, char *str2); 
 char *erase(char *str,ull index,ull len);
-char *splice_String(char *str, char *str2);
+char *Strsplice(char *str, char *str2);
 char *stringcut(char *str, ull index, ull len);
 char *stringcut_(char *str, ull index, ull len);
 //Forward_Ergodic和Forward_Icts一样
