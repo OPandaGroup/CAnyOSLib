@@ -9,14 +9,10 @@
 /*string function*/
 _Bool stringcmp(char *_Str1, char *_Str2){
     size_t lenght_1 = strlen(_Str1), lenght_2 = strlen(_Str2);
-    printf("Link %ld %ld", lenght_1, lenght_2) ;
     if(strlen(_Str1) != strlen(_Str2)){
-        printf("if ->1") ;
         return 0;
     }else{
-        printf("if ->2") ;
         for(int i = 0; i < strlen(_Str1); i++){
-            printf("%c",_Str1[i]);
             if(_Str1[i] != _Str2[i]){
                 return 0;
             }

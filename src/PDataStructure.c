@@ -20,7 +20,6 @@ struct stack *Stack(){
 }
 
 void push_stack(struct stack *stack, string data){
-    printf("   push ") ;
     struct stack_node *node = (struct stack_node *)malloc(sizeof(struct stack_node));
     if(stack == NULL) {
         printError("PDataStructure.so", "Creat Stack`s node", "Stack is NULL, Memory error");
@@ -61,19 +60,15 @@ void add_stack_data(struct stack *stack, void *data){
 
 
 void pop_stack(struct stack *stack){
-    printf("   pop ") ;
     if(stack->len == 0){
         return;
     }else if(stack->len == 1){
-        printf("stack is empty"); 
         stack->top = NULL;
-        stack->end = NULL;printf("stack is empty");
+        stack->end = NULL;
     }else{
-        printf("stack pop");
         stack->end = stack->end->last;
         // if(stack->end->next != NULL)
         //     free(stack->end->next);
-        printf("stack pop");
         //stack->end->next = NULL;
     }
     stack->len--;
