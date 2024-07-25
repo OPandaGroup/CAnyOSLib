@@ -80,7 +80,13 @@ int main(){
                     ) ;
                 else{
                     if(stringcmp(tags[i], Strsplice("/", get_stack_top(stack)->data))){
-                              
+                        pop_stack(stack) ;
+                    }else{
+                        printError(
+                            "PDataStructure.so",
+                            "No find tag start",
+                            "In Xml file, no find tag start, please check your file"
+                        ) ;
                     }
                 }
 
