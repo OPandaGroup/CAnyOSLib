@@ -78,10 +78,13 @@ struct dirt_node{
 };
 /*function definition of dirt*/
 struct dirt *Dirt();
-void append_dirt(struct dirt *dirt, string key, string value);
+void print_dirt(struct dirt *dirt);
 void remove_dirt_key(struct dirt *dirt, string key);
 bool find_dirt_key(struct dirt *dirt, string key);
-void print_dirt(struct dirt *dirt);
+string get_key(struct dirt_node *dirt_node);
+string get_value(struct dirt_node *dirt_node);
+struct dirt_node *get_dirt_node(struct dirt *dirt, string key);
+void append_dirt(struct dirt *dirt, string key, string value);
 /*The following code is the tree definition, 
 the struct and function definition*/
 typedef struct tree{

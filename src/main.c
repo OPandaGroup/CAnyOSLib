@@ -2,11 +2,17 @@
 #include "./include/PString.h"
 #include "./include/PDataStructure.h"
 
+dirt *getTreeData(string str){
+    list *list = List() ;
+    size_t start = 0, end = 0;
+    while(str[start] == ' ')
+        start++;
+    printf("%ld\n", str[start]) ;
+}
+
 int main(){
     _ShellToUTF8() ;
-    string str = "<head><title>Document</title></head>";
-    //////////////00000000011111111112222222222333333333344444444445555555555666666666677777777
-    //////////////12345678901234567890123456789012345678901234567890123456789012345678901234567
+    string str = "<project name='test.c' default='build'><symbol><int name='a' scope='global' value='1'></int><char name = 'b' scope='global' value='a'></char></symbol><text><fun name = 'test' args='' return = 'int'><return>0</return></fun> <fun name='main' args='' return = 'int'><int name='a' scope='local' value='1'></int><char name = 'b' scope = 'local' value = 'a'></char><call name='test' args=''></call><set name='a' value='1'></set><call name='printf'    args='{string:\"d\",int:a}'></call><return fun='main'> 0</return></fun></text></project>";
     size_t len = 1;
     string *tags = malloc(SIZE_STRING*len);
     dirt *values = Dirt();
@@ -21,11 +27,9 @@ int main(){
             case '>':
                 if(tag_start != -1){
                     string tag = stringcut_(str, tag_start + 1, i - 1);
-                    // printf(tag) ;
                     tags[len-1] = Nicts(tag, 0, ' ');
                     size_t lenght = strlen(tags[len-1]);
                     // values[len-1] = Nicts(str, tag_start + lenght + 1, i - tag_start - lenght - 1);
-                    printf("tag:%s %ld start : %ld\n", tag, tag_start + lenght + 1, tag_start) ;
                     if(i - tag_start - lenght - 1 > 0)
                         append_dirt(values, intToString(tag_index), stringcut_(tag, lenght, strlen(tag))) ;
                     len++;
@@ -36,15 +40,12 @@ int main(){
                     }
                     if(tag[0] != '/')   tag_index++ ;
                     tag = tags[len-1] ;
-                    // if(stringcmp(tag, "hello")){
-                    //     printf("Hello World\n") ;
-                    // }
                     tag_start = -1;
                 }else{
                     printError(
                         "PDataStructure.so",
                         "No find tag start",
-                        "In Xml file, no find tag start, please check your file"
+                        "In Xml file, no find tag start, please check your file "
                     ) ;
                 }
                 break;
@@ -52,8 +53,7 @@ int main(){
                 break;
         }
     }
-    len --; 
-    printf("len:%d\n", len);
+    len--; 
     for(size_t i = 0; i < len; i++){
         printf("%s\n", tags[i]) ;
     }
@@ -67,48 +67,35 @@ int main(){
         }else if(stringcmp(stringcut(tags[i], 0, 1), "/")){
             if(get_stack_top(stack) == NULL){
                 printError(
-                    "PDataStructure.so",
+                    "PDataStructure.so",    
                     "No find tag start",
-                    "In Xml file, no find tag start, please check your file"
+                    "In Xml file, no find tag start, please check your file ! !"
                 ) ;
+                printf("\n\n%s", tags[i]) ;
             }else{
-                if(get_stack_top(stack) == NULL)
+                if(stringcmp(tags[i], Strsplice("/", get_stack_top(stack)->data))){
+                    pop_stack(stack) ;
+                }else{
                     printError(
                         "PDataStructure.so",
                         "No find tag start",
-                        "In Xml file, no find tag start, please check your file"
+                        "In Xml file, no find tag start, please check your file ! !"
                     ) ;
-                else{
-                    if(stringcmp(tags[i], Strsplice("/", get_stack_top(stack)->data))){
-                              
-                    }
                 }
-
-                pop_stack(stack) ;
             }
         }else{
-            // if(stringcmp(stringcut(tags[i], strlen(tags[i]-1), 1), "/")){
-            //     if(get_stack_top(stack) == NULL){
-            //         printError(
-            //             "PDataStructure.so",
-            //             "No find tag start",
-            //             "In Xml file, no find tag start, please check your file"
-            //         ) ;
-            //     }else{
-            //         tree *parent = get_stack_top(stack)->more_data ;
-            //         append_tree(parent, tags[i], None) ;
-            //     }
-            // }else{
+            struct dirt_node *value = get_dirt_node(values, Strsplice("$", intToString(i))), *more_value = get_dirt_node(values, intToString(i)) ;
             if(get_stack_top(stack) == NULL){
                 trees = Tree(None, tags[i], NULL) ;
                 push_stack(stack, tags[i]) ;
                 get_stack_top(stack)->more_data = trees;
-            }
+            }else{
                 tree *parent = get_stack_top(stack)->more_data ;
-                append_tree(parent, tags[i], None) ;
+                append_tree(parent, None, tags[i]) ;
                 push_stack(stack, tags[i]) ;
                 get_stack_top(stack)->more_data = parent->child[parent->child_num-1] ;
-            // }
+                parent->child[parent->child_num-1]->data = get_value(value) ;
+            }
         }
     }
     print_tree(trees, 0) ;
