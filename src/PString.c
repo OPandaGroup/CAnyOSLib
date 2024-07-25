@@ -72,6 +72,8 @@ char *Strsplice(char *str, char *str2){
 }
 
 char *stringcut(char *str, ull index, ull len) {
+    if(len > strlen(str) || index > strlen(str))
+        return None ;
     char *string = (char *)malloc(len+1);
     memset(string,0,len+1);
     for (int i = 0; i < len; i++){
@@ -85,7 +87,7 @@ char *stringcut_(char *str, ull start, ull end){
     return stringcut(str, start, end - start + 1);  
 }
 
-char *Forward_Ergodic(char *str, ull index, char stop) {
+char *Reverse_Ergodic(char *str, ull index, char stop) {
     char *string = (char *)malloc(strlen(str));
     memset(string, 0, strlen(str));
     int fi = 0 ; 
@@ -185,7 +187,7 @@ string Nictsc(string str, char ch[], ull index, char stop) {
     return strs;
 }
 
-string Forward_Nicts(string str, ull index, char stop) {
+string Reverse_Nicts(string str, ull index, char stop) {
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(strs));
     int len = 0;
     bool is_str = false, is_str_md = false; // md为双引号
@@ -209,7 +211,7 @@ string Forward_Nicts(string str, ull index, char stop) {
     return strs;
 }
 
-string Forward_Nictsc(string str, char ch[], ull index, char stop){
+string Reverse_Nictsc(string str, char ch[], ull index, char stop){
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(strs));
     int len = 0;
     bool is_str = false, is_str_md = false, flag = 0; // md为双引号
@@ -254,8 +256,8 @@ string Icts(string str, ull index, char stop){
     return strs;
 }
 
-string Forward_Icts(string str, ull index, char stop){
-    return Forward_Ergodic(str,index,stop);
+string Reverse_Icts(string str, ull index, char stop){
+    return Reverse_Ergodic(str,index,stop);
 }
 
 bool Nicts_bool(string str, ull index, char stop){
@@ -336,7 +338,7 @@ bool Ictsc_bool(string str, char ch[], ull index, char stop){
     }
 }
 
-bool Fowrard_Nicts_bool(string str, ull index, char stop){
+bool Reverse_Nicts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i>=0; i--){
         if(str[i]==stop){
@@ -353,7 +355,7 @@ bool Fowrard_Nicts_bool(string str, ull index, char stop){
     }
 }
 
-bool Fowrard_Nictsc_bool(string str, char ch[], ull index, char stop){
+bool Reverse_Nictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i>=0; i--){
         if(str[i]==stop){
@@ -373,7 +375,7 @@ bool Fowrard_Nictsc_bool(string str, char ch[], ull index, char stop){
     }
 }
 
-bool Forward_Icts_bool(string str, ull index, char stop){
+bool Reverse_Icts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if(str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r'){
@@ -384,7 +386,7 @@ bool Forward_Icts_bool(string str, ull index, char stop){
     }
 }
 
-bool Forward_Ictsc_bool(string str, char ch[], ull index, char stop){
+bool Reverse_Ictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         for (int j = 0; i < strlen(ch); i++){

@@ -263,6 +263,31 @@ bool find_dirt_key(struct dirt *dirt, string key){
     return 0;
 }
 
+string get_key(struct dirt_node *dirt_node){
+    if(dirt_node == NULL)
+        return None ;
+    else
+        return dirt_node->key;
+}
+
+string get_value(struct dirt_node *dirt_node){
+    if(dirt_node == NULL)
+        return None ;
+    else
+        return dirt_node->value;
+}
+
+struct dirt_node *get_dirt_node(struct dirt *dirt, string key){
+    struct dirt_node *node = dirt->head;
+    while(node != NULL){
+        if(strcmp(node->key,key) == 0){
+            return node;
+        }
+        node = node->next;
+    }
+    return NULL;
+}
+
 void print_dirt(struct dirt *dirt){
     struct dirt_node *node = dirt->head;
     if (dirt->len == 0 || node == NULL){
@@ -327,7 +352,7 @@ void append_tree(struct tree *tree, string data, string key){
 }
 
 void print_tree(struct tree *tree, int level){
-    printf("%s",tree->key);
+    printf("%s data:%s",tree->key, tree->data);
     for(int i = 0 ; i < tree->child_num ; i++){
         printf("\n");
         for(int j = 0 ; j < level ; j++){
