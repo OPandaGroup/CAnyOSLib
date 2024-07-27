@@ -388,10 +388,12 @@ void append_more_data(struct tree *tree, string key, string data){
 string get_tree_dirt(struct tree *tree, bool child){
     if(child){
         string str = "\0";
-        str = Strsplice(str,"$data");
-        str = Strsplice(str,"=\"");
-        str = Strsplice(str,tree->data);
-        str = Strsplice(str,"\"");
+        if(!stringcmp(tree->data,None)){
+            str = Strsplice(str,"$data");
+            str = Strsplice(str,"=\"");
+            str = Strsplice(str,tree->data);
+            str = Strsplice(str,"\"");
+        } 
         if(tree->more == NULL)  return str;
         if(tree->more->len == 0){
             return str;
@@ -432,8 +434,9 @@ string get_tree_XML(struct tree *tree, int level){
         str = Strsplice(str, "\t");
     }
     if(tree->child_num == 0){
-        str = Strsplice(str, Strsplice("<", Strsplice(tree->key, Strsplice(get_tree_dirt(tree, 0), "> "))));
-        str = Strsplice(str, tree->data);
+        str = Strsplice(str, Strsplice("<", Strsplice(tree->key, Strsplice(get_tree_dirt(tree, 0), ">"))));
+        if(tree->data != NULL && !stringcmp(tree->data, None))
+            str = Strsplice(str, tree->data);
         str = Strsplice(str, Strsplice("</", Strsplice(tree->key, ">\n")));
     }else{
         str = Strsplice(str, Strsplice("<", Strsplice(Strsplice(tree->key, Strsplice(" ", get_tree_dirt(tree, 1))), ">\n")));

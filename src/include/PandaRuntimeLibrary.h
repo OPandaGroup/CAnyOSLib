@@ -96,7 +96,7 @@ void append_list(struct list *list, string data);
 void append_list_plus(struct list *list, string data) ;//添加数据,主要针对一些特殊字符处理,例如:"", "None", "(null)"就不允许被添加进list
 void remove_list(struct list *list, int index);
 void print_list(struct list *list);
-
+string get_data(struct list_node *node) ;
 /*The following code is the dirt definition, 
 the struct and function definition*/
 typedef struct dirt{
