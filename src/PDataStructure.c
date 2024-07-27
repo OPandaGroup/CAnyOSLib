@@ -118,7 +118,7 @@ list *split(string str, char delimiter){
         i++;
     }
     if(str[strlen(str)-1] == delimiter || (start - i == 0)) return ls;
-    else append_list(ls, stringcut_(str, start, i));
+    else append_list(ls, stringcut_(str, start, i - 1));
     return ls;
 }
 
@@ -192,7 +192,7 @@ void print_list(struct list *list){
             
         node = node->next;
     }
-    printf("\b]");
+    printf("\b\b]");
 }
 
 //function of dirt
@@ -451,53 +451,145 @@ tree *get_child(struct tree *tree, int index){
     }
 }
 
-dirt *get_treeMoreData(string str){ 
-    // @bug: 这段代码中有一点bug, 导致处理数据可能会出现故障
-    endl ;
+dirt *getTreeData(string str){
+    if(stringcmp(None, str))
+        return NULL ;
+    size_t start = 0, end = 0;
+    while(str[start] == ' ')
+        start++;
     bool is_str = false, is_str_dm = false;
     string data = malloc(strlen(str)); memset(data, 0, strlen(str));
     if(data == NULL){
         printError("PDataStructure.so", "get_treeMoreData", "data is NULL, Memory error");
         return NULL;
-    }       
-    for(ull i = 0; i < strlen(str); i++){
+    }  
+    str = Strsplice(str, " ") ;
+    list *list = List();
+    size_t cutStart = start - 1;     
+    for(ull i = start; i < strlen(str); i++){
         if(str[i] == ' ' && str[i-1] == ' '){
             if(is_str || is_str_dm) data[strlen(data)] = ' ';
             else continue;
-        }else if(str[i] == ' ' && str[i-1] != ' '){
+        }else if(str[i] == ' ' && str[i-1] != ' ' && !(str[i-1] == '=' || (strlen(Anicts(str, i, '=')) == 0)) && !is_str && !is_str_dm){
             data[strlen(data)] = ',';
-        }else{
-            data[strlen(data)] = str[i];
+            continue;
+        }else if(str[i] == '\'' && !is_str_dm){
+            is_str = !is_str;
+        }else if(str[i] == '\"' && !is_str){
+            is_str_dm = !is_str_dm;
         }
+        if(str[i] != ' ')
+            data[strlen(data)] = str[i];
     }
     data[strlen(data)] = '\0';
-    list *list = split(data, ',');
-    dirt *Adirt = Dirt();
-    print_list(list);
-    free(data) ;
-    endl;
-    // for (size_t i = 0; i < list->len; i++){
-    //     string key = Icts(get_list_node(list, i)->data, 0, '=');
-    //     string value = Icts(get_list_node(list, i)->data, strlen(key)+1, '\0');
-    //     value = delchar(value, '\"');value = delchar(value, '\'');
-    //     append_dirt(Adirt, key, value);
-    // }
-    // print_dirt(Adirt);
-    // free(list); free(data);
-    return Adirt;
+    list = split(data, ',') ;
+    // print_list(list) ;
+    dirt *dirt = Dirt() ;
+    for(size_t i = 0; i < list->len; i++){
+        string node_data = get_list_node(list, i)->data ;
+        string key = Anicts(node_data, 0, '=') ;
+        // printf("%s %s\n", node_data, key) ;
+        string value = stringcut_(node_data, strlen(key) + 1, strlen(get_list_node(list, i)->data)) ;
+        value = stringcut_(value, 1, strlen(value) - 2);
+        append_dirt(dirt, key, value) ;
+    }
+    // print_list(list) ;
+    // print_dirt(dirt) ;
+    return dirt;
 }
 
-tree *get_tree_from_XML(string XML){
-    ull start = -1;
-    int len = 1;
-    char **strs = malloc(sizeof(char *)*len);
-    if(strs == NULL){
-        printError("PDataStructure.so", "get_tree_from_XML", "strs is NULL, Memory error");
-        return NULL;
+tree *get_tree_from_XML(string str){
+    size_t len = 1;
+    string *tags = malloc(SIZE_STRING*len);
+    dirt *values = Dirt();
+    stack *stack = Stack() ;
+    size_t tag_start = -1; //-1就是没有开始
+    size_t tag_index = 0;
+    for(size_t i = 0; i < strlen(str); i++){
+        switch (str[i]){
+            case '<':
+                tag_start = i ;//标记当前位置
+                break;
+            case '>':
+                if(tag_start != -1){
+                    string tag = stringcut_(str, tag_start + 1, i - 1);
+                    tags[len-1] = Anicts(tag, 0, ' ');
+                    size_t lenght = strlen(tags[len-1]);
+                    // values[len-1] = Nicts(str, tag_start + lenght + 1, i - tag_start - lenght - 1);
+                    if(i - tag_start - lenght - 1 > 0)
+                        append_dirt(values, intToString(tag_index), stringcut_(tag, lenght, strlen(tag))) ;
+                    len++;
+                    tags = realloc(tags, SIZE_STRING*len) ;
+                    string value = Anicts(str, i + 1, '<');  
+                    if(strlen(value) != 0){
+                        append_dirt(values, Strsplice("$", intToString(tag_index)), value) ;
+                    }
+                    if(tag[0] != '/')   tag_index++ ;
+                    tag = tags[len-1] ;
+                    tag_start = -1;
+                }else{
+                    printError(
+                        "PDataStructure.so",
+                        "No find tag start",
+                        "In Xml file, no find tag start, please check your file "
+                    ) ;
+                }
+                break;
+            default:
+                break;
+        }
     }
-    dirt *dirts = Dirt(); //处理更多数据
-    //第一次预处理
-    
+    len--; 
+    tree *trees = NULL ;
+    tag_index = 0;
+    for(size_t i = 0; i < len; i++){
+        if(stringcmp(stringcut(tags[i], 0, 3), "!--")){
+            continue;
+        }else if(stringcmp(stringcut(tags[i], 0, 1), "?")){
+            //版本信息
+        }else if(stringcmp(stringcut(tags[i], 0, 1), "/")){
+            if(get_stack_top(stack) == NULL){
+                printError(
+                    "PDataStructure.so",    
+                    "No find tag start",
+                    "In Xml file, no find tag start, please check your file ! !"
+                ) ;
+                printf("\n\n%s", tags[i]) ;
+            }else{
+                if(stringcmp(tags[i], Strsplice("/", get_stack_top(stack)->data))){
+                    pop_stack(stack) ;
+                }else{
+                    printError(
+                        "PDataStructure.so",
+                        "No find tag start",
+                        "In Xml file, no find tag start, please check your file ! !"
+                    ) ;
+                }
+            }
+        }else{
+            struct dirt_node *value = get_dirt_node(values, Strsplice("$", intToString(tag_index))), *more_value = get_dirt_node(values, intToString(tag_index)) ;
+            if(get_stack_top(stack) == NULL){
+                trees = Tree(None, tags[i], NULL) ;
+                push_stack(stack, tags[i]) ;
+                get_stack_top(stack)->more_data = trees;
+                trees->data = get_value(value) ;
+            }else{
+                tree *parent = get_stack_top(stack)->more_data ;
+                append_tree(parent, None, tags[i]) ;
+                push_stack(stack, tags[i]) ;
+                get_stack_top(stack)->more_data = parent->child[parent->child_num-1] ;
+                parent->child[parent->child_num-1]->data = get_value(value) ;
+            }
+            tree *tree = get_stack_top(stack)->more_data;
+            tree->more = getTreeData(get_value(more_value));
+            if((tree->more != NULL)){
+                tree->data = get_value(get_dirt_node(tree->more, "$data"));
+                remove_dirt_key(tree->more, "$data") ;
+            }
+            tag_index ++;
+        }
+    }
+    return trees ;
 }
 
 //function of resources

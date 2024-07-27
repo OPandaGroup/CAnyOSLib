@@ -7,6 +7,7 @@
         "pfile.h": "c",
         "pandaruntimelibrary.h": "c",
         "bit": "c",
-        "psystem.h": "c"
+        "psystem.h": "c",
+        "pcolor.h": "c"
     }
 }
