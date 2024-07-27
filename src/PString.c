@@ -87,20 +87,12 @@ char *stringcut_(char *str, ull start, ull end){
     return stringcut(str, start, end - start + 1);  
 }
 
-char *Reverse_Ergodic(char *str, ull index, char stop) {
-    char *string = (char *)malloc(strlen(str));
-    memset(string, 0, strlen(str));
-    int fi = 0 ; 
-    for(int i = index ; i >= 0 ; i--){
-        if(str[i]==stop){
-            break;
-        }else{
-            string[fi++] = str[i];
-        }
-    }
-    string[fi] = '\0';
-    string = realloc(string,strlen(string)+1);
-    return string;
+string Strclone(string str){
+    string strs = malloc(strlen(str)+1);
+    memset(strs, 0, strlen(str)+1);
+    for(size_t i = 0; i < strlen(str); i++)
+        strs[i] = str[i];
+    return strs;
 }
 
 string stringFlip(string str){
@@ -135,7 +127,7 @@ void Flip(string str){
     str = stringFlip(str);
 }
 
-string Nicts(string str, ull index, char stop) {
+string Anicts(string str, ull index, char stop) {
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(str));
     int len = 0;
     bool is_str = false, is_str_md = false; // md为双引号
@@ -158,7 +150,7 @@ string Nicts(string str, ull index, char stop) {
     return strs;
 }
 
-string Nictsc(string str, char ch[], ull index, char stop) {
+string Anictsc(string str, char ch[], ull index, char stop) {
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(strs));
     int len = 0;
     bool is_str = false, is_str_md = false, flag = 0; // md为双引号
@@ -187,7 +179,7 @@ string Nictsc(string str, char ch[], ull index, char stop) {
     return strs;
 }
 
-string Reverse_Nicts(string str, ull index, char stop) {
+string Reverse_Anicts(string str, ull index, char stop) {
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(strs));
     int len = 0;
     bool is_str = false, is_str_md = false; // md为双引号
@@ -211,7 +203,7 @@ string Reverse_Nicts(string str, ull index, char stop) {
     return strs;
 }
 
-string Reverse_Nictsc(string str, char ch[], ull index, char stop){
+string Reverse_Anictsc(string str, char ch[], ull index, char stop){
     char *strs = malloc(strlen(str)); memset(strs, 0, strlen(strs));
     int len = 0;
     bool is_str = false, is_str_md = false, flag = 0; // md为双引号
@@ -240,7 +232,7 @@ string Reverse_Nictsc(string str, char ch[], ull index, char stop){
     return strs;
 }
 
-string Icts(string str, ull index, char stop){
+string Aicts(string str, ull index, char stop){
     string strs = malloc(strlen(str)); memset(strs, 0, strlen(str));
     ull len = strlen(str);
     for(int i = index ; i < strlen(str) ; i++){
@@ -256,11 +248,23 @@ string Icts(string str, ull index, char stop){
     return strs;
 }
 
-string Reverse_Icts(string str, ull index, char stop){
-    return Reverse_Ergodic(str,index,stop);
+string Reverse_Aicts(string str, ull index, char stop){
+    char *string = (char *)malloc(strlen(str));
+    memset(string, 0, strlen(str));
+    int fi = 0 ; 
+    for(int i = index ; i >= 0 ; i--){
+        if(str[i]==stop){
+            break;
+        }else{
+            string[fi++] = str[i];
+        }
+    }
+    string[fi] = '\0';
+    string = realloc(string,strlen(string)+1);
+    return string;
 }
 
-bool Nicts_bool(string str, ull index, char stop){
+bool Anicts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if(str[i]==stop){
@@ -278,7 +282,7 @@ bool Nicts_bool(string str, ull index, char stop){
     return 0;
 }
 
-bool Nictsc_bool(string str, char ch[], ull index, char stop){
+bool Anictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if(str[i]==stop){
@@ -299,7 +303,7 @@ bool Nictsc_bool(string str, char ch[], ull index, char stop){
     return 0;
 }
 
-bool Icts_bool(string str, ull index, char stop){
+bool Aicts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if (str[i] == stop){
@@ -317,7 +321,7 @@ bool Icts_bool(string str, ull index, char stop){
     }
 }
 
-bool Ictsc_bool(string str, char ch[], ull index, char stop){
+bool Aictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if (str[i] == stop){
@@ -338,7 +342,7 @@ bool Ictsc_bool(string str, char ch[], ull index, char stop){
     }
 }
 
-bool Reverse_Nicts_bool(string str, ull index, char stop){
+bool Reverse_Anicts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i>=0; i--){
         if(str[i]==stop){
@@ -355,7 +359,7 @@ bool Reverse_Nicts_bool(string str, ull index, char stop){
     }
 }
 
-bool Reverse_Nictsc_bool(string str, char ch[], ull index, char stop){
+bool Reverse_Anictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i>=0; i--){
         if(str[i]==stop){
@@ -375,7 +379,7 @@ bool Reverse_Nictsc_bool(string str, char ch[], ull index, char stop){
     }
 }
 
-bool Reverse_Icts_bool(string str, ull index, char stop){
+bool Reverse_Aicts_bool(string str, ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         if(str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r'){
@@ -386,7 +390,7 @@ bool Reverse_Icts_bool(string str, ull index, char stop){
     }
 }
 
-bool Reverse_Ictsc_bool(string str, char ch[], ull index, char stop){
+bool Reverse_Aictsc_bool(string str, char ch[], ull index, char stop){
     bool is_str = 0, is_str_md = 0;
     for(int i = index; i<strlen(str);i++){
         for (int j = 0; i < strlen(ch); i++){

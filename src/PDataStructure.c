@@ -106,19 +106,19 @@ list *split(string str, char delimiter){
     list *ls = List();       // 创建一个list
     bool is_str = 0, is_str_dm = 0;
     while (str[i] != '\0'){
-        if(str[i] == '\"' && is_str == 0){
+        if(str[i] == '\"' && !is_str_dm){
             is_str = !is_str;
-        }else if(str[i] == '\'' && is_str_dm == 0){
+        }else if(str[i] == '\'' && !is_str){
             is_str_dm = !is_str_dm;
-        }else if(str[i] == delimiter){
+        }else if(str[i] == delimiter && !is_str && !is_str_dm){
             string tmp = stringcut(str, start, i - start);
             append_list(ls, tmp);
             start = i + 1;
         }
         i++;
     }
-    if(str[strlen(str)-1] == delimiter) return ls;
-    else append_list(ls, stringcut(str, start, i - start));
+    if(str[strlen(str)-1] == delimiter || (start - i == 0)) return ls;
+    else append_list(ls, stringcut_(str, start, i));
     return ls;
 }
 
@@ -188,16 +188,17 @@ void print_list(struct list *list){
     printf("[");
     while (node!=NULL){
         if(node->data != NULL)
-            printf("%s,",Strsplice(node->data, "\0"));
+            printf("%s , ",Strsplice(node->data, "\0"));
+            
         node = node->next;
     }
-    printf("]");
+    printf("\b]");
 }
 
 //function of dirt
 
 dirt *Dirt(){
-    dirt *dirt = (struct dirt *)malloc(sizeof(dirt));
+    dirt *dirt = malloc(sizeof(struct dirt));
     if(dirt == NULL) {
         printError("PDataStructure.so", "Creat dirt", "Dirt is NULL, Memory error");
         return dirt;

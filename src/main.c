@@ -1,13 +1,56 @@
 #include "./include/PSystem.h"
 #include "./include/PString.h"
 #include "./include/PDataStructure.h"
+#include "./include/PColor.h"
 
 dirt *getTreeData(string str){
-    list *list = List() ;
+    if(stringcmp(None, str))
+        return NULL ;
     size_t start = 0, end = 0;
     while(str[start] == ' ')
         start++;
-    printf("%ld\n", str[start]) ;
+    endl ;
+    bool is_str = false, is_str_dm = false;
+    string data = malloc(strlen(str)); memset(data, 0, strlen(str));
+    if(data == NULL){
+        printError("PDataStructure.so", "get_treeMoreData", "data is NULL, Memory error");
+        return NULL;
+    }  
+    str = Strsplice(str, " ") ;
+    list *list = List();
+    size_t cutStart = start - 1;     
+    for(ull i = start; i < strlen(str); i++){
+        if(str[i] == ' ' && str[i-1] == ' '){
+            if(is_str || is_str_dm) data[strlen(data)] = ' ';
+            else continue;
+        }else if(str[i] == ' ' && str[i-1] != ' ' && !(str[i-1] == '=' || (strlen(Anicts(str, i, '=')) == 0)) && !is_str && !is_str_dm){
+            data[strlen(data)] = ',';
+            continue;
+        }else if(str[i] == '\'' && !is_str_dm){
+            is_str = !is_str;
+        }else if(str[i] == '\"' && !is_str){
+            is_str_dm = !is_str_dm;
+        }
+        if(str[i] != ' ')
+            data[strlen(data)] = str[i];
+    }
+    printf(data) ;
+    endl;
+    data[strlen(data)] = '\0';
+    list = split(data, ',') ;
+    print_list(list) ;
+    dirt *dirt = Dirt() ;
+    for(size_t i = 0; i < list->len; i++){
+        string node_data = get_list_node(list, i)->data ;
+        string key = Anicts(node_data, 0, '=') ;
+        printf("%s %s\n", node_data, key) ;
+        string value = stringcut_(node_data, strlen(key) + 1, strlen(get_list_node(list, i)->data)) ;
+        // value = stringcut_(value, 1, strlen(value) - 2);
+        append_dirt(dirt, key, value) ;
+    }
+    // print_list(list) ;
+    print_dirt(dirt) ;
+    return dirt;
 }
 
 int main(){
@@ -27,14 +70,14 @@ int main(){
             case '>':
                 if(tag_start != -1){
                     string tag = stringcut_(str, tag_start + 1, i - 1);
-                    tags[len-1] = Nicts(tag, 0, ' ');
+                    tags[len-1] = Anicts(tag, 0, ' ');
                     size_t lenght = strlen(tags[len-1]);
                     // values[len-1] = Nicts(str, tag_start + lenght + 1, i - tag_start - lenght - 1);
                     if(i - tag_start - lenght - 1 > 0)
                         append_dirt(values, intToString(tag_index), stringcut_(tag, lenght, strlen(tag))) ;
                     len++;
                     tags = realloc(tags, SIZE_STRING*len) ;
-                    string value = Nicts(str, i + 1, '<');  
+                    string value = Anicts(str, i + 1, '<');  
                     if(strlen(value) != 0){
                         append_dirt(values, Strsplice("$", intToString(tag_index)), value) ;
                     }
@@ -59,6 +102,7 @@ int main(){
     }
     print_dirt(values); endl;
     tree *trees = NULL ;
+    tag_index = 0;
     for(size_t i = 0; i < len; i++){
         if(stringcmp(stringcut(tags[i], 0, 3), "!--")){
             continue;
@@ -84,19 +128,25 @@ int main(){
                 }
             }
         }else{
-            struct dirt_node *value = get_dirt_node(values, Strsplice("$", intToString(i))), *more_value = get_dirt_node(values, intToString(i)) ;
+            struct dirt_node *value = get_dirt_node(values, Strsplice("$", intToString(tag_index))), *more_value = get_dirt_node(values, intToString(tag_index)) ;
             if(get_stack_top(stack) == NULL){
                 trees = Tree(None, tags[i], NULL) ;
                 push_stack(stack, tags[i]) ;
                 get_stack_top(stack)->more_data = trees;
+                trees->data = get_value(value) ;
             }else{
                 tree *parent = get_stack_top(stack)->more_data ;
                 append_tree(parent, None, tags[i]) ;
                 push_stack(stack, tags[i]) ;
                 get_stack_top(stack)->more_data = parent->child[parent->child_num-1] ;
                 parent->child[parent->child_num-1]->data = get_value(value) ;
+                endl;
             }
+            tree *tree = get_stack_top(stack)->more_data;
+            tree->more = getTreeData(get_value(more_value));
+            tag_index ++;
         }
     }
+    // free(trees );
     print_tree(trees, 0) ;
 } 
