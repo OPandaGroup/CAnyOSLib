@@ -8,6 +8,10 @@
         "pandaruntimelibrary.h": "c",
         "bit": "c",
         "psystem.h": "c",
-        "pcolor.h": "c"
+        "pcolor.h": "c",
+        "windows.h": "c",
+        "pwindows.h": "c",
+        "stdio.h": "c",
+        "pprint.h": "c"
     }
 }

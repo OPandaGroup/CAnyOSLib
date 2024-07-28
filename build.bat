@@ -25,7 +25,7 @@ echo [%time%]:编译PDataTypeConversion完成 >> build.log
 if %Debug% == 1 (gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PDebug.c ..\build\PandaRunTimeLibrary\lib\PString.so ..\build\PandaRunTimeLibrary\lib\PFile.so -D__Panda_Debug__ -o ..\build\PandaRunTimeLibrary\lib\PDebug.so) else (gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PDebug.c ..\build\PandaRunTimeLibrary\lib\PString.so ..\build\PandaRunTimeLibrary\lib\PFile.so -o ..\build\PandaRunTimeLibrary\lib\PDebug.so)
 echo [%time%]:编译PDebug完成 >> build.log
 :: Windows
-gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PWindows.c ..\build\PandaRunTimeLibrary\lib\PString.so -o ..\build\PandaRunTimeLibrary\lib\PWindows.so
+gcc -shared -fpic ..\build\PandaRunTimeLibrary\src\PWindows.c ..\build\PandaRunTimeLibrary\lib\PString.so ..\build\PandaRunTimeLibrary\lib\Pprint.so -o ..\build\PandaRunTimeLibrary\lib\PWindows.so
 echo [%time%]:编译PWindows完成 >> build.log
 :: Linux
 :: 由于这个bat文件是针对Windows的,所以不用编译Linux的so库
