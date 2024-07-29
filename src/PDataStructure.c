@@ -138,7 +138,7 @@ bool Iter_List_Last(iterator_list *iter, size_t len)[
 size_t Iter_len_list(iterator_list *iter){
     return iter->len;
 }
-struct list_node *get_Iter_list(iterator_list *iter){
+struct list_node *get_Iter_listNode(iterator_list *iter){
     return iter->node ;
 }
 
@@ -363,6 +363,24 @@ string get_dirtJSON(struct dirt *dirt){
         node = node->next;
     }
     return Strsplice(json,"}\0");
+}
+
+dirt *get_config_File(string conf){
+    list *list = split(conf, '\n');
+    dirt *dirt = Dirt() ;
+    iterator_list *iter = Iterator_list(list) ;
+    for(int i = 0; i < list->len; i++){
+        if(Iter_List_Next(iter, 1)){
+            //迭代成功
+            string str = get_Iter_listNode(iter)->data ;
+            str = Anicts(str, '\0') ;
+            if(str[0] == '[' && str[strlen(str) - 1] == ']'){
+                str = stringcut_(1, strlen(str) - 2) ;
+                append_dirt(dirt, str) ;
+                dirt->tail->more_data = Dirt() ;
+            }
+        }
+    }
 }
 
 //function of tree
