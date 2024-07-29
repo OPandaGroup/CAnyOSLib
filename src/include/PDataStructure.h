@@ -56,6 +56,17 @@ struct list_node{
     struct list_node *next;
     struct list_node *last;
 };
+typedef struct iterator_list{
+    list *list;
+    size_t iter_len ;
+    list_node *node ;
+}iterator_list;
+//迭代器的函数
+iterator_list *Iterator_list(list *list) ;
+bool Iter_List_Next(iterator_list *iter, size_t len);
+bool Iter_List_Last(iterator_list *iter, size_t len);
+size_t Iter_len_list(iterator_list *iter) ;
+struct list_node *get_Iter_listNode(iterator_list *iter) ;
 /*function definition of list*/
 struct list *List();
 struct list *split(string str, char delimiter);
@@ -73,6 +84,7 @@ typedef struct dirt{
 }dirt;
 struct dirt_node{
     string key,value;
+    void *more_data ;
     struct dirt_node *next;
     struct dirt_node *last;
 };
@@ -85,6 +97,7 @@ string get_key(struct dirt_node *dirt_node);
 string get_value(struct dirt_node *dirt_node);
 struct dirt_node *get_dirt_node(struct dirt *dirt, string key);
 void append_dirt(struct dirt *dirt, string key, string value);
+dirt *get_config_File(string conf); //这个默认保证conf文件语法正确
 /*The following code is the tree definition, 
 the struct and function definition*/
 typedef struct tree{
