@@ -101,6 +101,47 @@ struct list *List(){
     return list;
 }
 
+iterator_list *Iterator_list(list *list){
+    iterator_list *iter = {list, 0, NULL}; 
+    return iter;
+}
+bool Iter_List_Next(iterator_list *iter, size_t len){
+    if(iter->node == NULL || iter->len == 0){
+        iter->node = iter->list->head;
+        iter->len = 0;
+    }
+    size_t i = 0;
+    while(iter->node->next != NULL && i < len){
+        iter->node = iter->node->next ;
+        i++;
+    }
+    if(i < len)
+        return false;
+    else 
+        return true;
+}
+bool Iter_List_Last(iterator_list *iter, size_t len)[
+    if(iter->node == NULL || iter->len == 0){
+        iter->node = iter->list->tail;
+        iter->len = 0;
+    }
+    size_t i = 0;
+    while(iter->node->last!= NULL && i < len){
+        iter->node = iter->node->last ;
+        i++;
+    }
+    if(i < len)
+        return false;
+    else 
+        return true;
+]
+size_t Iter_len_list(iterator_list *iter){
+    return iter->len;
+}
+struct list_node *get_Iter_list(iterator_list *iter){
+    return iter->node ;
+}
+
 list *split(string str, char delimiter){
     int i = 0, j = 0, start = 0; // i是游标,j是记录位置,idx是记录string的遍历位置
     list *ls = List();       // 创建一个list

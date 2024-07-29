@@ -56,6 +56,17 @@ struct list_node{
     struct list_node *next;
     struct list_node *last;
 };
+typedef struct iterator_list{
+    list *list;
+    size_t iter_len ;
+    list_node *node ;
+}iterator_list;
+//迭代器的函数
+iterator_list *Iterator_list(list *list) ;
+bool Iter_List_Next(iterator_list *iter, size_t len);
+bool Iter_List_Last(iterator_list *iter, size_t len);
+size_t Iter_len_list(iterator_list *iter) ;
+struct list_node *get_Iter_list(iterator_list *iter) ;
 /*function definition of list*/
 struct list *List();
 struct list *split(string str, char delimiter);
