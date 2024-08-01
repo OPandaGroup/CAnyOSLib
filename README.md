@@ -1,9 +1,17 @@
 # PandaRuntimeLibrary
+
+<p align="center">
+    <img src="./documents/img/Logo.jpg" alt="PandaRuntimeLibrary" width="200" height="200">
+</p>
+
+
+
 这是所属于panda的运行时库，为方便统一管理panda的所有库文件，建立此仓库，如果库文件出问题，也可以来这里找到所需库文件
 ## 目录
 [知识版权] (#知识版权)
 [实现原理] (#实现原理)
 [更多] (#更多)
+
 ## 知识版权
 1. 开源协议:这个项目的开源协议是GPL2.0 全称 GNU GENERAL PUBLIC LICENSE, 您必须遵守内部规定的开源协议,否则,我们将追究您的法律责任
 2. 项目标志:这个项目的名称为PandaRuntimeLibrary就是Panda的运行时库,这个名称归ChinaPandaGroup所有
