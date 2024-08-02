@@ -1,9 +1,16 @@
 # PandaRuntimeLibrary
 
 <p align="center">
-    <img src="./documents/img/Logo.jpg" alt="PandaRuntimeLibrary" width="200" height="200">
+    <img src="./docs/img/Logo.jpg" alt="PandaRuntimeLibrary" width="250" height="200">
 </p>
 
+
+<p align="center">
+    <img src="https://img.shields.io/badge/license-GPLv2.0-blue.svg" alt="License">
+    <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="Build">
+    <img src="https://img.shields.io/badge/lang-C/C++-yellow.svg" alt="lang">
+    <img src="https://img.shields.io/badge/group-PandaGroup-green.svg" alt="Group">
+</p>
 
 
 这是所属于panda的运行时库，为方便统一管理panda的所有库文件，建立此仓库，如果库文件出问题，也可以来这里找到所需库文件

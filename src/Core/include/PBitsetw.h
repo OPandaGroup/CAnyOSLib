@@ -9,12 +9,14 @@
 
 typedef struct PBitset_32 {
 	unsigned long bits;
-    char *store;
+    _Bool *store;
+    unsigned long size;
 } PBitset32;
 
 typedef struct PBitset_64 {
 	unsigned long long bits;
-    char *store;
+    _Bool *store;
+    unsigned long size;
 } PBitset64;
 
 PBitset32 *Bitset(unsigned long number) ;
