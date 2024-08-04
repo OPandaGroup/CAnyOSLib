@@ -1,7 +1,7 @@
 # PandaRuntimeLibrary
 
 <p align="center">
-    <img src="https://github.com/ChinaPandaGroup/PandaRuntimeLibrary/docs/img/Logo.jpg" alt="PandaRuntimeLibrary" width="250" height="200">
+    <img src="https://github.com/ChinaPandaGroup/PandaRuntimeLibrary/blog/main/docs/img/Logo.jpg" alt="PandaRuntimeLibrary" width="250" height="200">
 </p>
 
 
