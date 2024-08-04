@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "./PString.h"
+#include "./PStringw.h"
 
 string intToString(int num);
 int stringToInt(string str);

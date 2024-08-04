@@ -1,8 +1,10 @@
-#include "./src/Core/include/PBitsetw.h"
+#include "./src/Core/include/Widgets/PBitsetw.h"
 
 int main() {
-    // PBitset32 *bitset = Bitset(0);
-    // setBit(bitset, 100000);
-    // printBitsetln(bitset, __PRINT_BIT_FTO);
-    printf("%d %d", sizeof(_Bool), sizeof(unsigned int));
+    PBitset32 *bitset = Bitset(-2147483647);
+    system("chcp 65001") ;
+    upDateBitset(bitset) ;
+    printf("is _ debug") ;
+    if(printBitsetln(bitset, __PRINT_BITSET_FORMAT_FTO | __PRINT_BITSET_SYMBOL_ONESELF))
+        printf("is _ debug") ;
 }

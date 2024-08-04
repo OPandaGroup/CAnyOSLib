@@ -4,7 +4,7 @@
 // @author:Writing 
 // @copyright: Panda, 2024
 //
-#include "../include/PString.h"
+#include "../include/Widgets/PStringw.h"
 
 /*string function*/
 _Bool stringcmp(char *_Str1, char *_Str2){

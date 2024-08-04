@@ -44,3 +44,6 @@
 ### 更新须知
 
 ​	更新后，您需要写change文件，还需要给我们反馈，具体反馈内容和change文件一样
+
+### 鸣谢
+immccn123:<img src="https://avatars.githubusercontent.com/u/41335471?s=48&v=4" alt="thanks" width="100" height="100">

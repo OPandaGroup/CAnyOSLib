@@ -13,11 +13,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "./PFile.h"
-#include "./PString.h"
-#include "./Pprint.h"
+#include "./PFilew.h"
+#include "./PStringw.h"
+#include "./Pprintw.h"
 #include "./PDataTypeDefine.h"
-#include "./PDataTypeConversion.h"
+#include "./PDataTypeConversionw.h"
 
 //data structure
 /*The code that follows is the stack definition, 
