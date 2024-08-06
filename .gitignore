@@ -1,3 +1,7 @@
 .vscode/settings.json
 *.so
 *.exe
+log.txt
+Test.log
+*.log
+test.c

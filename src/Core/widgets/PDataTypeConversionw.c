@@ -44,3 +44,24 @@ int stringToInt(string str){
         return num;
     }
 }
+
+string doubleToString(double num){
+    int Int = num/1;
+    int Float = num - Int;
+    string String = Strsplice(intToString(Int), ".") ;
+    string Dou = malloc(1);
+    
+}
+
+string Int(int str){
+    return intToString(str);
+}
+string Double(double str){
+    
+    
+}
+string Float(string str) ;
+string StringI(int num) ;
+string StringD(double num) ;
+string StringF(float num) ;
+string StringS(string str) ;

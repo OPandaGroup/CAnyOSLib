@@ -7,7 +7,21 @@
 #include "../include/Widgets/PStringw.h"
 
 /*string function*/
+_Bool stringcmp_(char *_Str1, char *_Str2){
+    size_t lenght_1 = strlen(_Str1), lenght_2 = strlen(_Str2);
+    if(strlen(_Str1) != strlen(_Str2)){
+        return 0;
+    }else{
+        for(int i = strlen(_Str1); i >= 0; i--){
+            if(_Str1[i] != _Str2[i]){
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
 _Bool stringcmp(char *_Str1, char *_Str2){
+    
     size_t lenght_1 = strlen(_Str1), lenght_2 = strlen(_Str2);
     if(strlen(_Str1) != strlen(_Str2)){
         return 0;

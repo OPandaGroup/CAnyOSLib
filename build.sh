@@ -8,8 +8,8 @@
 # compiler: gcc
 echo "build..."
 echo "[BUILDING]" > build.log
-file_list=("PStringw" "PDataTypeConversionw" "Pprintw" "PDataStructurew" "PFilew" "PBitsetw")
-position_list=("./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/")
+file_list=("PStringw" "PDataTypeConversionw" "Pprintw" "PDataStructurew" "PFilew" "PBitsetw" "PTimew" "PLogw")
+position_list=("./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/" "./src/Core/widgets/")
 pg=("-" "\\" "|" "/")
 rm -rf ../build/PandaRuntimelib
 mkdir ../build/PandaRuntimelib

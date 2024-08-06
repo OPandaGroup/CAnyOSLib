@@ -14,5 +14,13 @@
 
 string intToString(int num);
 int stringToInt(string str);
+string doubleToString(double str);
+string Int(int str) ;
+string Double(double str) ;
+string Float(string str) ;
+string StringI(int num) ;
+string StringD(double num) ;
+string StringF(float num) ;
+string StringS(string str) ;
 
 #endif //_PDATATYPECONVERSION_H_

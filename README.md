@@ -1,7 +1,7 @@
 # PandaRuntimeLibrary
 
 <p align="center">
-    <img src="https://github.com/ChinaPandaGroup/PandaRuntimeLibrary/docs/img/Logo.jpg" alt="PandaRuntimeLibrary" width="250" height="200">
+    <img src="http://imgos.cn/2024/08/05/66b044cf1f637.jpg" alt="Logo.jpg" width="150" height="120" title="Logo.jpg" />
 </p>
 
 
@@ -15,21 +15,20 @@
 
 这是所属于panda的运行时库，为方便统一管理panda的所有库文件，建立此仓库，如果库文件出问题，也可以来这里找到所需库文件
 ## 目录
-[知识版权] (#知识版权)
-[实现原理] (#实现原理)
-[更多] (#更多)
+[知识版权](#知识版权)
+[实现原理](#实现原理)
+[更多](#更多)
 
 ## 知识版权
 1. 开源协议:这个项目的开源协议是GPL2.0 全称 GNU GENERAL PUBLIC LICENSE, 您必须遵守内部规定的开源协议,否则,我们将追究您的法律责任
 2. 项目标志:这个项目的名称为PandaRuntimeLibrary就是Panda的运行时库,这个名称归ChinaPandaGroup所有
 
 ## 实现原理
-本项目计划使用C,C++,Rust等偏底层的高级语言来实现,同时,在release版本中,也会附带.h头文件,以便您基于这个库继续开发, 当然, 您在开发时,建议将include都拷贝到您的项目中,以便于您使用,因为这些项目中的.h头文件都存在互相依赖的关系
+本项目计划使用C,C++,Rust等偏底层的高级语言来实现,同时,在release版本中,也会附带.h头文件,以便您基于这个库继续开发, 当然, 您在开发时,建议将include都拷贝到您的项目中,以便于您使用,因为这些项目中的.h头文件都存在互相依赖的关系,详情请见[开发介绍](./docs/develop/main.md)
 
 ## 更多
 
 ### 加入我们
-
 ​	您可以给我们(Panda_Feedback@outlook.com)发送加入申请,也可以加入我们的QQ群聊(689990013),申请文件见下 括号中的内容必需替换成对应的内容或删除: 
 
 ```markdown
