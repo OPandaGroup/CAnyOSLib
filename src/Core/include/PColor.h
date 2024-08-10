@@ -37,4 +37,27 @@
 #define SetColor(...) printf(__VA_ARGS__)
 #define ClearColor() printf(NONE)
 
+typedef enum {
+    NONE_COLOR,
+    BLACK_COLOR,
+    GRAY_COLOR,
+    RED_COLOR,
+    GREEN_COLOR,
+    YELLOW_COLOR,
+    BLUE_COLOR,
+    PURPLE_COLOR,
+    CYAN_COLOR,
+    WHITE_COLOR,
+    BOLD_COLOR,
+    UNDERLINE_COLOR,
+    BLINK_COLOR,
+    REVERSE_COLOR,
+    HIDE_COLOR,
+    CLEAR_COLOR,
+    CLRLINE_COLOR
+}PColor;
+
+void Termianl_Color(PColor color);
+void Termianl_Reset(PColor color);
+
 #endif

@@ -4,7 +4,7 @@
 // @author:Writing 
 // @copyright: Panda, 2024
 //
-#include "../include/Widgets/PDataStructure.h"
+#include "../include/Mods/PDataStructure.h"
 
 //function of stack
 struct stack *Stack(){

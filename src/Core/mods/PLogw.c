@@ -1,21 +1,21 @@
-#include "../include/Widgets/PLogw.h"
+#include "../include/Mods/PLogw.h"
 
 //format : [XX:XX:XX] : [USER] : [LOG] : [MESSAGE] 
 //format : [XX:XX:XX] : [SYSTEM] : [LOG] : [MESSAGE]
 //format : [LOG] :[MESSAGE]
-void PPrint(string user, string message, int format, FILE* file){
+void PLogPrint(string user, string message, string Log_Mode, int format, FILE* file){
     switch(format){
         case __LOG__MESSAGE:
-            fprintf(file, "[DEBUG] : %s", message) ;
+            fprintf(file, "[%s] : %s", Log_Mode, message) ;
             break ;
         case __LOG__TIME_USER:
-            fprintf(file, "[%s] : [%s] : [DEBUG] : %s", getTime_c(getTimeStamp()), user, message) ;
+            fprintf(file, "[%s] : [%s] : [%s] : %s", getTime_c(getTimeStamp()), user, Log_Mode, message) ;
             break ;
         case __LOG_USER:
-            fprintf(file, "[%s] : [DEBUG] : %s", user, message) ;
+            fprintf(file, "[%s] : [%s] : %s", user, Log_Mode, message) ;
             break;
         default:
-            fprintf(file, "DEBUG ERROR") ;
+            fprintf(file, "%s ERROR", Log_Mode) ;
             break;
     }
 }
@@ -24,79 +24,55 @@ void print_Debug(PLog *log, char *message){
     if(log->max_print_class < __LOG_PRINT_CLASS_DEBUG){
         return ;
     }
+    Termianl_Color(log->debug_color) ;
     FILE *stream = NULL;
     switch (log->debug_redirect){
         case __LOG_PRINT_REDIRECT_FILE:
             stream = log->log_file ;
-            PPrint(log->user, message, log->format, stream) ;
+            PLogPrint(log->user, message, "DEBUG", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_CONSOLE:
             stream = stdout ;
-            PPrint(log->user, message, log->format, stream) ;
+            PLogPrint(log->user, message, "DEBUG", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_BOTH:
             stream = stdout ;
-            PPrint(log->user, message, log->format, stream) ;
+            PLogPrint(log->user, message, "DEBUG", log->format, stream) ;
             stream = log->log_file ;
-            PPrint(log->user, message, log->format, stream) ;
-            break;
-        case __LOG_PRINT_REDIRECT_NONE :
-            return;
-            break ;
-        case __LOG_PRINT_REDIRECT_NULL :
-            return ;
+            PLogPrint(log->user, message, "DEBUG", log->format, stream) ;
             break;
         default:
             break;
     }
+    Termianl_Reset(log->debug_color) ;
     return ;
 }
 
 void print_Info(PLog *log, char *message){
-    FILE *stream = NULL ;
     if(log->max_print_class < __LOG_PRINT_CLASS_INFO){
         return  ;
     }
+    Termianl_Color(log->info_color) ;
+    FILE *stream = NULL;
     switch (log->info_redirect){
         case __LOG_PRINT_REDIRECT_FILE:
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "INFO", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_CONSOLE:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "INFO", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_BOTH:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "INFO", log->format, stream) ;
             stream = log->log_file ;
-            goto PRINT ;
-            break;
-        case __LOG_PRINT_REDIRECT_NONE :
-            return  ;
-            break ;
-        case __LOG_PRINT_REDIRECT_NULL :
-            return  ;
+            PLogPrint(log->user, message, "INFO", log->format, stream) ;
             break;
         default:
             break;
     }
-PRINT:
-    switch(log->format){
-        case __LOG__MESSAGE:
-            fprintf(stream, "[INFO] : %s", message) ;
-            break ;
-        case __LOG__TIME_USER:
-            fprintf(stream, "[%s] : [%s] : [INFO] : %s", getTime_c(getTimeStamp()), log->user, message) ;
-            break ;
-        case __LOG_USER:
-            fprintf(stream, "[%s] : [INFO] : %s", log->user, message) ;
-            break;
-        default:
-            fprintf(stream, "INFO ERROR") ;
-            break;
-    }
-    return  ;
+    Termianl_Reset(log->info_color) ;
 }
 
 void print_Warning(PLog *log, char *message){
@@ -104,20 +80,21 @@ void print_Warning(PLog *log, char *message){
     if(log->max_print_class < __LOG_PRINT_CLASS_WARNING){
         return  ;
     }
+    Termianl_Color(log->warning_color) ;
     switch (log->warning_redirect){
         case __LOG_PRINT_REDIRECT_FILE:
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "WARNING", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_CONSOLE:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "WARNING", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_BOTH:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "WARNING", log->format, stream) ;
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "WARNING", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_NONE :
             return  ;
@@ -128,22 +105,7 @@ void print_Warning(PLog *log, char *message){
         default:
             break;
     }
-PRINT:
-    switch(log->format){
-        case __LOG__MESSAGE:
-            fprintf(stream, "[WARNING] : %s", message) ;
-            break ;
-        case __LOG__TIME_USER:
-            fprintf(stream, "[%s] : [%s] : [WARNING] : %s", getTime_c(getTimeStamp()), log->user, message) ;
-            break ;
-        case __LOG_USER:
-            fprintf(stream, "[%s] : [WARNING] : %s", log->user, message) ;
-            break;
-        default:
-            fprintf(stream, "WARNING ERROR") ;
-            break;
-    }
-    return ;
+    Termianl_Reset(log->warning_color) ;
 }
 
 void print_Error(PLog *log, char *message){
@@ -151,45 +113,26 @@ void print_Error(PLog *log, char *message){
     if(log->max_print_class < __LOG_PRINT_CLASS_ERROR){
         return  ;
     }
+    Termianl_Color(log->error_color) ;
     switch (log->error_redirect){
         case __LOG_PRINT_REDIRECT_FILE:
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "ERROR", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_CONSOLE:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "ERROR", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_BOTH:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "ERROR", log->format, stream) ;
             stream = log->log_file ;
-            goto PRINT ;
-            break;
-        case __LOG_PRINT_REDIRECT_NONE :
-            return  ;
-            break ;
-        case __LOG_PRINT_REDIRECT_NULL :
-            return  ;
+            PLogPrint(log->user, message, "ERROR", log->format, stream) ;
             break;
         default:
             break;
     }
-PRINT:
-    switch(log->format){
-        case __LOG__MESSAGE:
-            fprintf(stream, "[ERROR] : %s", message) ;
-            break ;
-        case __LOG__TIME_USER:
-            fprintf(stream, "[%s] : [%s] : [ERROR] : %s", getTime_c(getTimeStamp()), log->user, message) ;
-            break ;
-        case __LOG_USER:
-            fprintf(stream, "[%s] : [ERROR] : %s", log->user, message) ;
-            break;
-        default:
-            fprintf(stream, "ERROR PRINT ERROR") ;
-            break;
-    }
+    Termianl_Reset(log->error_color) ;
     return  ;
 }
 
@@ -198,20 +141,21 @@ void print_Fatal(PLog *log, char *message){
     if(log->max_print_class < __LOG_PRINT_CLASS_FATAL){
         return  ;
     }
+    Termianl_Color(log->fatal_color) ;
     switch (log->fatal_redirect){
         case __LOG_PRINT_REDIRECT_FILE:
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "FATAL", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_CONSOLE:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "FATAL", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_BOTH:
             stream = stdout ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "FATAL", log->format, stream) ;
             stream = log->log_file ;
-            goto PRINT ;
+            PLogPrint(log->user, message, "FATAL", log->format, stream) ;
             break;
         case __LOG_PRINT_REDIRECT_NONE :
             return  ;
@@ -222,21 +166,7 @@ void print_Fatal(PLog *log, char *message){
         default:
             break;
     }
-PRINT:
-    switch(log->format){
-        case __LOG__MESSAGE:
-            fprintf(stream, "[FATAL] : %s", message) ;
-            break ;
-        case __LOG__TIME_USER:
-            fprintf(stream, "[%s] : [%s] : [FATAL] : %s", getTime_c(getTimeStamp()), log->user, message) ;
-            break ;
-        case __LOG_USER:
-            fprintf(stream, "[%s] : [FATAL] : %s", log->user, message) ;
-            break;
-        default:
-            fprintf(stream, "FATAL ERROR") ;
-            break;
-    }
+    Termianl_Reset(log->fatal_color) ;
     exit(-1) ;
 }
 
@@ -297,4 +227,47 @@ void RedirectLog(PLog *log, int class, int red){
             break ;
     }
     return ;
+}
+
+void SetLogColor(PLog *log, int logClass, PColor color){
+    switch(logClass){
+        case __LOG_PRINT_CLASS_INFO:
+            log->info_color = color ;
+            break ;
+        case __LOG_PRINT_CLASS_DEBUG:
+            log->debug_color = color ;
+            break ;
+        case __LOG_PRINT_CLASS_WARNING:
+            log->warning_color = color ;
+            break ;
+        case __LOG_PRINT_CLASS_ERROR:
+            log->error_color = color ;
+            break ;
+        case __LOG_PRINT_CLASS_FATAL:
+            log->fatal_color = color ;
+            break ;
+        default :
+            log->fatal_color = RED_COLOR;
+            Termianl_Color(RED_COLOR) ;
+            printf("[TATAL ERROR] : Unknown Log Class, please check your code\n") ;
+            break;
+    }
+}   
+
+void UseLogColorConfig(PLog *log, int config){
+    switch (config){
+        case __LOG_COLOR_CONF_1:
+            SetLogColor(log, __LOG_PRINT_CLASS_INFO, GREEN_COLOR) ;
+            SetLogColor(log, __LOG_PRINT_CLASS_DEBUG, BLUE_COLOR) ;
+            SetLogColor(log, __LOG_PRINT_CLASS_WARNING, YELLOW_COLOR) ;
+            SetLogColor(log, __LOG_PRINT_CLASS_ERROR, RED_COLOR) ;
+            SetLogColor(log, __LOG_PRINT_CLASS_FATAL, BOLD_COLOR) ;
+            break;
+        
+        default:
+        log->fatal_color = RED_COLOR;
+            Termianl_Color(RED_COLOR) ;
+            printf("[TATAL ERROR] : Unknown Log Class, please check your code\n") ;
+            break;
+    }
 }

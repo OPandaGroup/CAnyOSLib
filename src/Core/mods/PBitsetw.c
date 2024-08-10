@@ -1,4 +1,4 @@
-#include "../include/Widgets/PBitsetw.h"
+#include "../include/Mods/PBitsetw.h"
 
 PBitset *Bitset(long number) {
     PBitset *bitset = malloc(sizeof(PBitset));
@@ -37,12 +37,30 @@ bool setBitsetNumber(PBitset *bitset, long number) {
     free(bitset->store);
     bitset->store = malloc(sizeof(_Bool)) ;
     long cp = abs(number);
-    while(cp){
-        bitset->size++;
-        bitset->store = realloc(bitset->store, bitset->size*sizeof(_Bool)) ;
-        if(!setBit(bitset, bitset->size - 1, cp & 1))
-            return false;
-        cp = cp >> 1;
+    if(bitset->symbol){
+        while(cp){
+            bitset->size++;
+            bitset->store = realloc(bitset->store, bitset->size*sizeof(_Bool)) ;
+            if(!setBit(bitset, bitset->size - 1, cp & 1))
+                return false;
+            cp = cp >> 1;
+        }
+    }else{
+        //这是负数的代码 由于负数有补码
+        while(cp){
+            bitset->size++;
+            bitset->store = realloc(bitset->store, bitset->size*sizeof(_Bool)) ;
+            if(!setBit(bitset, bitset->size - 1, !(cp & 1)))
+                return false;
+            cp = cp >> 1;
+        }
+        _Bool tmp = true ;
+        long long i = 0;
+        while(tmp)
+            if(bitset->store[i] == 0)
+                bitset->store[i] = 1;
+            else
+                bitset->store[i] = 0;
     }
     return true;
 }
