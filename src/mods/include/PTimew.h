@@ -7,7 +7,6 @@
 #include "./PDataTypeConversionw.h"
 #include "./PStringw.h"
 #include "./PDataTypeDefine.h"
-#include "../PSystem.h"
 
 time_t getTimeStamp();
 string getTime_c(time_t timestamp) ;

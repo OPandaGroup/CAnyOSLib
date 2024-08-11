@@ -1,4 +1,4 @@
-#include "../include/PColor.h"
+#include "./include/PColor.h"
 
 void Termianl_Color(PColor color){
     switch(color){

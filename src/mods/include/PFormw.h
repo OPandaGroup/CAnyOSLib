@@ -24,7 +24,7 @@ typedef struct PForm {
     PLines *titles; //这一行是专门用与存储表头信息的
     struct PLine **lines; //这一行是表头下面实际的数据
 }PForm;
-PForm *PForm_new(string title, size_t width, ...);
+PForm *PForm_new(string title, size_t width);
 void SetPFormTitle(PForm *form, string title);
 bool SetPFormTitles(PForm *form, size_t index, string title);
 void SetPFormLines(PForm *form, size_t lines, size_t index, string line);

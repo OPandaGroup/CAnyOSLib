@@ -1,4 +1,4 @@
-#include "../include/Mods/PBitsetw.h"
+#include "./include/PBitsetw.h"
 
 PBitset *Bitset(long number) {
     PBitset *bitset = malloc(sizeof(PBitset));
@@ -22,7 +22,6 @@ long GetHighBitset(PBitset *bitset) { // The high is 1
             i++;
     return i;
 }
-
 
 bool setBit(PBitset *bitset, unsigned long index, bool value){
     if(index >= bitset->size || index < 0)

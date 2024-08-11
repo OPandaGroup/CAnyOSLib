@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./PStringw.h"
-#include "../PSystem.h"
+// #include "..PSystem.h"
 #include "./PDataTypeDefine.h"
 
 typedef struct PBitset {

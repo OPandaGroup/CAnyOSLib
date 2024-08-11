@@ -4,6 +4,7 @@
 // @copyright : GPL
 //
 
+
 typedef struct Object{
     // @class : Event Object (可以使用函数绑定事件)
     

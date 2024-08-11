@@ -1,4 +1,4 @@
-#include "../include/Mods/PMemory.h"
+#include "./include/PMemory.h"
 
 void *PMalloc(size_t size){
     void *ptr = malloc(size);

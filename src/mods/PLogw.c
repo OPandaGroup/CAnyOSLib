@@ -1,4 +1,4 @@
-#include "../include/Mods/PLogw.h"
+#include "./include/PLogw.h"
 
 //format : [XX:XX:XX] : [USER] : [LOG] : [MESSAGE] 
 //format : [XX:XX:XX] : [SYSTEM] : [LOG] : [MESSAGE]
@@ -15,7 +15,7 @@ void PLogPrint(string user, string message, string Log_Mode, int format, FILE* f
             fprintf(file, "[%s] : [%s] : %s", user, Log_Mode, message) ;
             break;
         default:
-            fprintf(file, "%s ERROR", Log_Mode) ;
+            PLogPrint(user, message, Log_Mode, __LOG__TIME_USER, file);
             break;
     }
 }

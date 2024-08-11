@@ -9,7 +9,7 @@
 echo "build..."
 echo "[BUILDING]" > build.log
 file_list=("PStringw" "PDataTypeConversionw" "Pprintw" "PDataStructurew" "PFilew" "PBitsetw" "PTimew" "PColor" "PLogw" "PMemory" "PFormw")
-position_list=("./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/" "./src/Core/Mods/")
+position_list=("./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/" "./src/mods/")
 pg=("-" "\\" "|" "/")
 rm -rf ../build/PandaRuntimelib
 mkdir ../build/PandaRuntimelib

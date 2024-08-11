@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "./PDataTypeDefine.h"
-#include "../PColor.h"
+#include "./PColor.h"
 #include "./PTimew.h"
 
 //format 

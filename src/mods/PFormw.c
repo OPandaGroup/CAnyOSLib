@@ -5,12 +5,18 @@
 // @brief : 一个表格结构
 //
 
-#include "../include/Mods/PFormw.h"
+
+// @bug : 这段文件中有bug
+#include "./include/PLogw.h"
+#include "./include/PFormw.h"
 
 PLines *PLines_new(size_t length){
+    PLog *log = Log(__LOG_PRINT_CLASS_INFO, "ROOT");
     PLines *lines = malloc(sizeof(PLines));
     lines->length = length;
     lines->lines = malloc(sizeof(string) * length);
+    SetLogColor(log, __LOG_PRINT_CLASS_DEBUG, GREEN_COLOR);
+    print_Debug(log, "PLines_new()");
     return lines;
 }
 
@@ -23,7 +29,7 @@ bool SetLines(PLines *lines, size_t line){
 }
 
 bool PLines_add(PLines *lines, string line){
-    if(PDilatation(lines->lines, lines->length + 1)){
+    if(PDilatation(lines->lines, sizeof(string))){
         lines->lines[lines->length] = line;
         return true;
     }else{
@@ -46,17 +52,11 @@ void PLines_free(PLines *lines){
     free(lines) ;
 }
 
-PForm *PForm_new(string title, size_t width, ...){
+PForm *PForm_new(string title, size_t width){
     PForm *form = malloc(sizeof(PForm));
     form->title = title;
     form->width = width;
-    va_list args;
-    va_start(args, width);
-    size_t height = va_arg(args, size_t);
-    form->height = height; //height 其实是个多余的参数,没有必要一定要传递
-    for(size_t i = 0; i < height; i++){
-        form->lines[i] = PLines_new(width);
-    }
+    form->lines[0] = PLines_new(width);
     return form;
 }
 
