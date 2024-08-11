@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="Build">
     <img src="https://img.shields.io/badge/lang-C/C++-yellow.svg" alt="lang">
     <img src="https://img.shields.io/badge/group-PandaGroup-green.svg" alt="Group">
-    <img src="https://img.shields.io/badge/bilibili-写代码ing.svg" alt="bilibili">
+    <a href="https://space.bilibili.com/1526443661"><img src="https://img.shields.io/badge/bilibili-writing-blue.svg" alt="Group"></a>
 </p>
 
 
