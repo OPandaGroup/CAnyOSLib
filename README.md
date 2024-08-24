@@ -1,7 +1,7 @@
 # PandaRuntimeLibrary
 
 <p align="center">
-    <img src="http://imgos.cn/2024/08/05/66b044cf1f637.jpg" alt="Logo.jpg" width="150" height="120" title="Logo.jpg" />
+    <img src="https://img.picui.cn/free/2024/08/24/66c960f8970de.png" alt="Prtlents.png" title="Prtlents.png" />
 </p>
 
 
